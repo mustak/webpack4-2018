@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/mustak/webpack4-2018/issues"
   },
-  "homepage": "https://github.com/mustak/webpack4-2018#readme"
+  "homepage": "https://github.com/mustak/webpack4-2018#readme",
+  "devDependencies": {
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8"
+  }
 }
