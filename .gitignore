@@ -1,3 +1,7 @@
+# Current Project
+dist
+build
+
 # Logs
 logs
 *.log
