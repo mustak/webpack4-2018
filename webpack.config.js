@@ -16,6 +16,17 @@ module.exports = (env = {}) => {
       filename: '[name]-[chunkhash:8]-main.js',
       path: path.resolve(__dirname, dist)
     },
+    module:{
+      rules:[
+        {
+          test:/\.css$/,
+          use:[
+            'style-loader',
+            'css-loader'
+          ]
+        }
+      ]
+    },
     plugins: [
       new CleanWebpackPlugin([dist]),
       new HtmlWebpackPlugin({
