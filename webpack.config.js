@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const autoprefixer = require('autoprefixer');
+const postcssPresetEnv = require('postcss-preset-env');
 const dist = 'dist';
 
 module.exports = (env = {}) => {
@@ -19,11 +21,17 @@ module.exports = (env = {}) => {
     module:{
       rules:[
         {
-          test:/\.css$/,
-          use:[
-            'style-loader',
-            'css-loader'
-          ]
+          test: /\.css$/,
+          use: [
+            require.resolve('style-loader'),
+            {
+              loader: require.resolve('css-loader'),
+              options: {
+                importLoaders: 1,
+              },
+            },
+            require.resolve('postcss-loader'),
+          ],
         }
       ]
     },
@@ -31,7 +39,7 @@ module.exports = (env = {}) => {
       new CleanWebpackPlugin([dist]),
       new HtmlWebpackPlugin({
         inject: false,
-        template: 'src/index.html',
+        template: 'src/index.ejs',
         appMountId: 'app',
         mobile: true,
         htmlIE: false,
