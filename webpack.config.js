@@ -20,7 +20,7 @@ module.exports = (env = {}) => {
       new CleanWebpackPlugin([dist]),
       new HtmlWebpackPlugin({
         inject: false,
-        template: 'src/index.html',
+        template: 'src/index.ejs',
         appMountId: 'app',
         mobile: true,
         htmlIE: false,
