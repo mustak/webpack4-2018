@@ -1,27 +1,29 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-const dist = 'dist';
+const paths = require('./config_webpack/paths');
 
 module.exports = (env = {}) => {
   //console.log(env);
+  //console.table(paths);
   return {
     devtool: 'cheap-module-source-map',
-    entry: {
-      app: './src/index.js',
-      temp: './src/temp.js'
-    },
+    entry: [
+      paths.appMainJS
+    ],
     mode: 'development',
     output: {
-      filename: '[name]-[chunkhash:8]-main.js',
-      path: path.resolve(__dirname, dist)
+      pathinfo: true,
+      path: paths.appDist,
+      filename: 'static/js/bundle.js',
+      chunkFilename: 'static/js/[name].chunk.js',
+      publicPath: '/'
     },
     plugins: [
-      new CleanWebpackPlugin([dist]),
+      new CleanWebpackPlugin([paths.appDist]),
       new HtmlWebpackPlugin({
         inject: false,
-        template: 'src/index.ejs',
+        template: paths.appTemplate,
         appMountId: 'app',
         mobile: true,
         htmlIE: false,
