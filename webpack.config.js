@@ -7,6 +7,7 @@ const dist = 'dist';
 module.exports = (env = {}) => {
   //console.log(env);
   return {
+    devtool: 'cheap-module-source-map',
     entry: {
       app: './src/index.js',
       temp: './src/temp.js'
