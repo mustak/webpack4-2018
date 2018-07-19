@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 const paths = require('./config_webpack/paths');
 
 module.exports = (env = {}) => {
@@ -18,6 +19,16 @@ module.exports = (env = {}) => {
       filename: 'static/js/bundle.js',
       chunkFilename: 'static/js/[name].chunk.js',
       publicPath: '/'
+    },
+    resolve:{
+      modules:['node_modules'],
+      extensions: ['.js', '.json', '.jsx'],
+      plugins: [
+        //When using    require("component/foo")
+        //will look for 'some/directory/foo/index.js
+        //followed by   'some/directory/foo/foo.js
+        new DirectoryNamedWebpackPlugin(true)
+      ],
     },
     plugins: [
       new CleanWebpackPlugin([paths.appDist]),
