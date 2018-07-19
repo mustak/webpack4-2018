@@ -5,6 +5,7 @@ const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 module.exports = {
+    appSrc: resolveApp('src'),
     appDist: resolveApp('dist'),
     appMainJS: resolveApp('src/index.js'),
     appTemplate: resolveApp('assets/html/index.ejs')

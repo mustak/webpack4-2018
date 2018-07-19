@@ -30,6 +30,24 @@ module.exports = (env = {}) => {
         new DirectoryNamedWebpackPlugin(true)
       ],
     },
+    module:{
+      rules:[
+        {
+          enforce: 'pre',
+          test: /\.(js|jsx)$/,
+          use: [
+            {
+              loader: require.resolve('eslint-loader'),
+              options: {
+                formatter: require("eslint/lib/formatters/stylish"),
+                eslintPath: require.resolve('eslint'),
+              },
+            },
+          ],
+          include: paths.appSrc,
+        }
+      ]//end rule
+    },//end module
     plugins: [
       new CleanWebpackPlugin([paths.appDist]),
       new HtmlWebpackPlugin({
