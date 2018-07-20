@@ -1,8 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 const paths = require('./config_webpack/paths');
+
+
+//const autoprefixer = require('autoprefixer');
+//const postcssPresetEnv = require('postcss-preset-env');
 
 module.exports = (env = {}) => {
   const nodeEnv = env.production ? 'production' : 'development';
@@ -56,10 +61,24 @@ module.exports = (env = {}) => {
                 cacheDirectory: true,
               },
             },
+            {
+              test: /\.css$/,
+              use: [
+                require.resolve('style-loader'),
+                {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1,
+                  },
+                },
+                require.resolve('postcss-loader'),
+              ],
+            }
           ]
         },
       ] //end rule
     }, //end module
+
     plugins: [
       new CleanWebpackPlugin([paths.appDist]),
       new HtmlWebpackPlugin({
