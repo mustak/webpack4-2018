@@ -1,9 +1,9 @@
 :root {
-    --mainColor: #12345678;
+    --red: #ff3456ff;
   }
 
 a {
-    color: var(--mainColor);
+    color: var(--red);
 }
 
 div {
@@ -16,5 +16,5 @@ div {
 }
 
 .red {
-    color: var(--mainColor);
+    color: var(--red);
 }
