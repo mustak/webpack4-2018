@@ -5,14 +5,16 @@ const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 const paths = require('./config_webpack/paths');
 
 module.exports = (env = {}) => {
-  //console.log(env);
-  //console.table(paths);
+  const nodeEnv = env.production ? 'production' : 'development';
+  process.env.BABEL_ENV = nodeEnv;
+  process.env.NODE_ENV = nodeEnv;
+
   return {
     devtool: 'cheap-module-source-map',
     entry: [
       paths.appMainJS
     ],
-    mode: 'development',
+    mode: nodeEnv,
     output: {
       pathinfo: true,
       path: paths.appDist,
@@ -20,9 +22,9 @@ module.exports = (env = {}) => {
       chunkFilename: 'static/js/[name].chunk.js',
       publicPath: '/'
     },
-    resolve:{
-      modules:['node_modules'],
-      extensions: ['.js', '.json', '.jsx'],
+    resolve: {
+      modules: ['node_modules'],
+      extensions: ['.js', '.json', '.jsx', '.mjs'],
       plugins: [
         //When using    require("component/foo")
         //will look for 'some/directory/foo/index.js
@@ -30,24 +32,34 @@ module.exports = (env = {}) => {
         new DirectoryNamedWebpackPlugin(true)
       ],
     },
-    module:{
-      rules:[
-        {
+    module: {
+      rules: [{
           enforce: 'pre',
-          test: /\.(js|jsx)$/,
-          use: [
+          test: /\.(js|jsx|mjs)$/,
+          use: [{
+            loader: require.resolve('eslint-loader'),
+            options: {
+              formatter: require("eslint/lib/formatters/stylish"),
+              eslintPath: require.resolve('eslint'),
+            },
+          }, ],
+          include: paths.appSrc,
+        }, //eslint enforce:pre
+        {
+          oneOf: [
+            // Process with babel-loader.
             {
-              loader: require.resolve('eslint-loader'),
+              test: /\.(js|jsx|mjs)$/,
+              include: paths.appSrc,
+              loader: require.resolve('babel-loader'),
               options: {
-                formatter: require("eslint/lib/formatters/stylish"),
-                eslintPath: require.resolve('eslint'),
+                cacheDirectory: true,
               },
             },
-          ],
-          include: paths.appSrc,
-        }
-      ]//end rule
-    },//end module
+          ]
+        },
+      ] //end rule
+    }, //end module
     plugins: [
       new CleanWebpackPlugin([paths.appDist]),
       new HtmlWebpackPlugin({
