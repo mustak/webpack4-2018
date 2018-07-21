@@ -8,5 +8,5 @@ module.exports = {
     appSrc: resolveApp('src'),
     appDist: resolveApp('dist'),
     appMainJS: resolveApp('src/index.js'),
-    appTemplate: resolveApp('assets/html/index.ejs'),
+    appTemplate: resolveApp('src/assets/index.ejs'),
 };
