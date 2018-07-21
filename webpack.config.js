@@ -38,7 +38,8 @@ module.exports = (env = {}) => {
       ],
     },
     module: {
-      rules: [{
+      rules: [
+        {
           enforce: 'pre',
           test: /\.(js|jsx|mjs)$/,
           use: [{
@@ -73,10 +74,17 @@ module.exports = (env = {}) => {
                 },
                 require.resolve('postcss-loader'),
               ],
-            }
-          ]
-        },
-      ] //end rule
+            },
+            {
+              exclude: [/\.(js|jsx|mjs|ejs)$/, /\.html$/, /\.json$/],
+              loader: require.resolve('file-loader'),
+              options: {
+                name: 'assets/media/[name].[hash:8].[ext]',
+              },
+            },
+          ],
+        },//end oneOF
+      ] //end rules
     }, //end module
 
     plugins: [
