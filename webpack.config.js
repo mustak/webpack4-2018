@@ -23,8 +23,8 @@ module.exports = (env = {}) => {
     output: {
       pathinfo: true,
       path: paths.appDist,
-      filename: 'static/js/bundle.js',
-      chunkFilename: 'static/js/[name].chunk.js',
+      filename: 'assets/js/bundle.js',
+      chunkFilename: 'assets/js/[name].chunk.js',
       publicPath: ''
     },
     resolve: {
