@@ -1,6 +1,6 @@
 import str from './temp';
 import _ from 'lodash';
-import './style.css';
+import './assets/styles/style.css';
 
 function component() {
     var element = document.createElement('div');

@@ -76,6 +76,14 @@ module.exports = (env = {}) => {
               ],
             },
             {
+              test: [/\.(bmp|gif|jpeg|png|svg)$/],
+              loader: require.resolve('url-loader'),
+              options: {
+                limit: 12000,
+                name: 'assets/imgs/[name].[hash:8].[ext]',
+              },
+            },
+            {
               exclude: [/\.(js|jsx|mjs|ejs)$/, /\.html$/, /\.json$/],
               loader: require.resolve('file-loader'),
               options: {
