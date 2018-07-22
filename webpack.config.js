@@ -50,7 +50,7 @@ module.exports = (env = {}) => {
             },
           }, ],
           include: paths.appSrc,
-        }, //eslint enforce:pre
+        }, //end eslint enforce:pre rule
         {
           oneOf: [
             // Process with babel-loader.
@@ -90,8 +90,8 @@ module.exports = (env = {}) => {
                 name: 'assets/media/[name].[hash:8].[ext]',
               },
             },
-          ],
-        },//end oneOF
+          ],//end oneOf array
+        },//end oneOF rule
       ] //end rules
     }, //end module
 
@@ -109,6 +109,9 @@ module.exports = (env = {}) => {
           preserveLineBreaks: true
         }
       })
-    ]
-  };
+    ],//end plugins
+    performance: {
+      hints: false
+    },
+  };//end return object
 }
