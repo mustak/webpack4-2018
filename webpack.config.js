@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -13,6 +14,8 @@ module.exports = (env = {}) => {
   const nodeEnv = env.production ? 'production' : 'development';
   process.env.BABEL_ENV = nodeEnv;
   process.env.NODE_ENV = nodeEnv;
+  const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+  const host = process.env.HOST || '0.0.0.0';
 
   return {
     devtool: 'cheap-module-source-map',
@@ -25,7 +28,7 @@ module.exports = (env = {}) => {
       path: paths.appDist,
       filename: 'assets/js/bundle.js',
       chunkFilename: 'assets/js/[name].chunk.js',
-      publicPath: ''
+      publicPath: paths.publicPath,
     },
     resolve: {
       modules: ['node_modules'],
@@ -38,8 +41,7 @@ module.exports = (env = {}) => {
       ],
     },
     module: {
-      rules: [
-        {
+      rules: [{
           enforce: 'pre',
           test: /\.(js|jsx|mjs)$/,
           use: [{
@@ -90,8 +92,8 @@ module.exports = (env = {}) => {
                 name: 'assets/media/[name].[hash:8].[ext]',
               },
             },
-          ],//end oneOf array
-        },//end oneOF rule
+          ], //end oneOf array
+        }, //end oneOF rule
       ] //end rules
     }, //end module
 
@@ -108,10 +110,21 @@ module.exports = (env = {}) => {
           conservativeCollapse: true,
           preserveLineBreaks: true
         }
-      })
-    ],//end plugins
+      }), //end HtmlWebpackPlugin
+      new webpack.HotModuleReplacementPlugin(),
+    ], //end plugins
+    devServer: {      
+      https: protocol === 'https',
+      host: host,
+      compress: true,
+      hot: true,
+      contentBase: 'dist/assets',
+      watchContentBase: true,
+      publicPath: paths.publicPath,
+      quiet: true,
+    }, //end devServer
     performance: {
       hints: false
     },
-  };//end return object
+  }; //end return object
 }

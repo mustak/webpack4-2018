@@ -9,4 +9,5 @@ module.exports = {
     appDist: resolveApp('dist'),
     appMainJS: resolveApp('src/index.js'),
     appTemplate: resolveApp('src/assets/index.ejs'),
+    appPublicPath:'',
 };
